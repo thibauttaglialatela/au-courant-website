@@ -1,4 +1,17 @@
+import useApi from './utils/hooks/useApi'
+import { useMemo } from 'react'
+
 function App() {
+  //appel de l'api
+  const options = useMemo(() => ({}), [])
+
+  const { loading, error, data, refetch } = useApi(
+    'works/latest?limit=3&sort=end_date',
+    options,
+  )
+  console.log(data)
+  console.log(error)
+  console.log(loading)
   return (
     <>
       <h1>Titre 1</h1>
@@ -16,6 +29,7 @@ function App() {
         <li>liste1</li>
         <li>2</li>
       </ul>
+      <button onClick={refetch}>Rafraichir la page</button>
     </>
   )
 }
