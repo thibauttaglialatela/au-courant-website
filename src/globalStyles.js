@@ -19,7 +19,6 @@ body {
     font-family: ${typography.fontFamilies.body};
     font-size: ${typography.fontSizes.body};
     line-height: ${typography.lineHeights.body};
-    margin: 0 12px;
     color: ${colors.black};
     background-color: ${colors.white};
 }
@@ -65,9 +64,6 @@ ul, ol {
 
 
 @media screen and (min-width: 426px) {
-  body {
-    margin: 0 60px;
-  }
   h1 { font-size: ${typography.fontSizesDesktop.h1}; }
   h2 { font-size: ${typography.fontSizesDesktop.h2}; }
   h3 { font-size: ${typography.fontSizesDesktop.h3}; }
