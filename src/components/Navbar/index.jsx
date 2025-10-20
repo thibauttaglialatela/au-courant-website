@@ -105,19 +105,25 @@ const MenuWrapper = styled.div`
   }
 `
 const StyledNavLink = styled(NavLink)`
-  text-decoration: ${(props) => {
-    if (props.isActive) {
-      return 'underline ${colors.secondary} 4px'
-    }
-    return 'none'
-  }};
-  &:hover {
-    text-decoration: underline ${colors.secondary} 4px;
-  }
   font-family: 'Montserrat', sans-serif;
   font-size: 0.75rem;
   font-weight: bold;
   color: ${colors.white};
+  text-decoration: none;
+  position: relative;
+  transition: all 0.2s ease;
+
+  &.active {
+    text-decoration: underline;
+    text-decoration-thickness: 3px;
+    text-decoration-color: ${colors.secondary};
+  }
+
+  &:hover {
+    text-decoration: underline;
+    text-decoration-thickness: 3px;
+    text-decoration-color: ${colors.secondary};
+  }
 `
 function Navbar() {
   const [isOpen, setIsOpen] = useState(false)
@@ -130,8 +136,8 @@ function Navbar() {
       <MenuWrapper $isOpen={isOpen}>
         <NavMenu>
           <StyledNavLink to="/">Accueil</StyledNavLink>
-          <StyledNavLink>Travaux</StyledNavLink>
-          <StyledNavLink>Contact</StyledNavLink>
+          <StyledNavLink to="/works">Travaux</StyledNavLink>
+          <StyledNavLink to="/contact">Contact</StyledNavLink>
         </NavMenu>
       </MenuWrapper>
 
