@@ -4,6 +4,8 @@ import colors from '../../utils/style/colors.js'
 import homePagePictureUrl from '../../assets/au-courant-illustration-homePage.jpg'
 import aboutPictureUrl from '../../assets/about_section_illustration.jpg'
 import { fadeInUp } from '../../utils/mixins/animations/fadeInUp.jsx'
+import { useEffect, useState } from 'react'
+import Loader from '../../components/Loader/index.jsx'
 
 const HomePageWrapper = styled.section`
   margin: clamp(1rem, 3vw, 3.75rem);
@@ -68,6 +70,19 @@ const StyledAboutDescription = styled.p`
 `
 
 function Home() {
+  const [loading, setLoading] = useState(true)
+
+  useEffect(() => {
+    const timer = setTimeout(() => {
+      setLoading(false)
+    }, 2500)
+
+    return () => clearTimeout(timer)
+  })
+
+  if (loading) {
+    return <Loader />
+  }
   return (
     <>
       <Header
