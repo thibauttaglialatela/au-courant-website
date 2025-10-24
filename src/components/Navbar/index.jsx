@@ -12,8 +12,12 @@ const StyledNavbar = styled.nav`
   flex-direction: row;
   align-items: center;
   justify-content: space-between;
-  position: relative;
+  position: fixed;
+  z-index: 1000;
   padding: 0 0.375rem;
+  margin-bottom: auto;
+  top: 0;
+  left: 0;
 
   @media screen and (min-width: 426px) {
     padding: 0 1.25rem;
