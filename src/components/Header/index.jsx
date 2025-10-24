@@ -9,6 +9,7 @@ const StyledHeader = styled.header`
 const HeaderImage = styled.img`
   width: 100%;
   height: auto;
+  padding-top: 6vh;
 
   @media screen and (min-width: 426px) {
     aspect-ratio: 16/5;
