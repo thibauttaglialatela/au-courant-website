@@ -4,8 +4,10 @@ import colors from '../../utils/style/colors.js'
 import homePagePictureUrl from '../../assets/au-courant-illustration-homePage.jpg'
 import aboutPictureUrl from '../../assets/about_section_illustration.jpg'
 import { fadeInUp } from '../../utils/mixins/animations/fadeInUp.jsx'
-import { useEffect, useState } from 'react'
+import useApi from '../../utils/hooks/useApi.js'
 import Loader from '../../components/Loader/index.jsx'
+import { useMemo } from 'react'
+import ServiceCard from '../../components/ServiceCard/index.jsx'
 
 const HomePageWrapper = styled.section`
   margin: clamp(1rem, 3vw, 3.75rem);
@@ -13,7 +15,7 @@ const HomePageWrapper = styled.section`
 const AboutSection = styled.section`
   display: flex;
   flex-direction: column;
-  margin-top: clamp(2.5rem, 6vw, 4rem);
+  margin-top: clamp(1.5rem, 6vw, 2rem);
   ${fadeInUp};
 
   @media (prefers-reduced-motion: reduce) {
@@ -32,7 +34,7 @@ const AboutSection = styled.section`
     column-gap: 1.25rem;
   }
 `
-const StyledTitleAbout = styled.h2`
+const StyledHomeHeading2 = styled.h2`
   color: ${colors.black};
   text-align: center;
 
@@ -68,20 +70,27 @@ const StyledAboutDescription = styled.p`
     max-width: 60ch;
   }
 `
+const StyledPrestations = styled.section`
+  display: flex;
+  flex-wrap: wrap;
+  gap: 1.5rem;
+  margin-top: clamp(1.5rem, 6vw, 2rem);
 
+  @media screen and (min-width: 426px) {
+    gap: 2rem;
+    justify-content: center;
+  }
+`
 function Home() {
-  const [loading, setLoading] = useState(true)
+  const options = useMemo(() => ({}), [])
+  const {
+    loading,
+    error,
+    data: dataPrestations,
+  } = useApi('prestations/', options)
 
-  useEffect(() => {
-    const timer = setTimeout(() => {
-      setLoading(false)
-    }, 2500)
-
-    return () => clearTimeout(timer)
-  })
-
-  if (loading) {
-    return <Loader />
+  if (error) {
+    return <p>Erreur : {error}</p>
   }
   return (
     <>
@@ -92,7 +101,7 @@ function Home() {
       />
       <HomePageWrapper>
         <AboutSection>
-          <StyledTitleAbout>A propos</StyledTitleAbout>
+          <StyledHomeHeading2>A propos</StyledHomeHeading2>
           <StyledImageAbout
             src={aboutPictureUrl}
             alt="électricien utilisant une perceuse"
@@ -107,6 +116,24 @@ function Home() {
             besoins avec sérieux et efficacité.
           </StyledAboutDescription>
         </AboutSection>
+        <section>
+          <StyledHomeHeading2>Nos prestations</StyledHomeHeading2>
+          {loading ? (
+            <Loader />
+          ) : (
+            <StyledPrestations>
+              {dataPrestations.map((prestation) => (
+                <ServiceCard
+                  title={prestation.name}
+                  price={prestation.tarif}
+                  imageUrl={prestation.image.url}
+                  imageAlt={prestation.image.alt}
+                  key={prestation.id}
+                />
+              ))}
+            </StyledPrestations>
+          )}
+        </section>
       </HomePageWrapper>
     </>
   )
