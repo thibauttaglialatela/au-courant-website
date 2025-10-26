@@ -8,6 +8,7 @@ import useApi from '../../utils/hooks/useApi.js'
 import Loader from '../../components/Loader/index.jsx'
 import { useMemo } from 'react'
 import ServiceCard from '../../components/ServiceCard/index.jsx'
+import CallToAction from '../../components/CallToAction/index.jsx'
 
 const HomePageWrapper = styled.section`
   margin: clamp(1rem, 3vw, 3.75rem);
@@ -134,6 +135,10 @@ function Home() {
             </StyledPrestations>
           )}
         </section>
+        <CallToAction
+          CTAText="Une de nos prestations vous intérresse ? N’hésitez pas"
+          linkHref="#"
+        />
       </HomePageWrapper>
     </>
   )
