@@ -1,17 +1,19 @@
 import styled from 'styled-components'
 import colors from '../../utils/style/colors.js'
 import PropTypes from 'prop-types'
+import typography from '../../utils/style/typography.js'
 
 const StyledCTA = styled.section`
   display: flex;
   flex-direction: column;
   align-items: center;
   justify-content: center;
-  height: 11rem;
+  min-height: 11rem;
   width: 100%;
   background-color: ${colors.primary};
-  margin-top: 1.5rem;
-  padding: 0 4rem;
+  margin-top: clamp(1.5rem, 4vw, 2rem);
+  padding: clamp(1.5rem, 5vw, 4rem);
+  gap: clamp(1rem, 4vw, 3rem);
 `
 const StyledCTAText = styled.p`
   text-align: center;
@@ -36,12 +38,17 @@ const StyledCTALink = styled.a`
   &:hover {
     filter: brightness(1.15);
   }
+
+  @media screen and (min-width: 426px) {
+    width: 18rem;
+    font-size: ${typography.fontSizesDesktop.body};
+  }
 `
 function CallToAction({ CTAText, linkHref }) {
   return (
     <StyledCTA>
       <StyledCTAText>{CTAText}</StyledCTAText>
-      <StyledCTALink href={linkHref}>En savoir plus</StyledCTALink>
+      <StyledCTALink href={linkHref}>Contactez nous</StyledCTALink>
     </StyledCTA>
   )
 }
