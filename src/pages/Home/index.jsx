@@ -10,6 +10,7 @@ import { useMemo } from 'react'
 import ServiceCard from '../../components/ServiceCard/index.jsx'
 import CallToAction from '../../components/CallToAction/index.jsx'
 import ProjectCard from '../../components/ProjectCard/index.jsx'
+import PartnerCard from '../../components/PartnerCard/index.jsx'
 
 const HomePageWrapper = styled.section`
   margin: clamp(1rem, 3vw, 3.75rem);
@@ -36,12 +37,10 @@ const AboutSection = styled.section`
     column-gap: 1.25rem;
   }
 `
-const LastWorkWrapper = styled.section`
-  display: flex;
-  flex-direction: column;
+const HomeSectionWrapper = styled.section`
   margin-top: clamp(2.5rem, 4vw + 1rem, 4rem);
 `
-const LastWorks = styled.section`
+const CardsWrapper = styled.section`
   display: flex;
   flex-direction: row;
   flex-wrap: wrap;
@@ -95,17 +94,6 @@ const StyledAboutDescription = styled.p`
     max-width: 60ch;
   }
 `
-const StyledPrestations = styled.section`
-  display: flex;
-  flex-wrap: wrap;
-  gap: 1.5rem;
-  margin-top: clamp(1.5rem, 6vw, 2rem);
-
-  @media screen and (min-width: 426px) {
-    gap: 2rem;
-    justify-content: center;
-  }
-`
 function Home() {
   const options = useMemo(() => ({}), [])
   const {
@@ -120,12 +108,22 @@ function Home() {
     data: dataLastWorks,
   } = useApi('works/latest?limit=3&sort=end_date', options)
 
+  const {
+    loading: loadingPartners,
+    error: errorPartners,
+    data: dataPartners,
+  } = useApi('partners/', options)
+
   if (errorPrestations) {
     return <p>Erreur : {errorPrestations}</p>
   }
 
   if (errorLastWorks) {
     return <p>Erreur: {errorLastWorks}</p>
+  }
+
+  if (errorPartners) {
+    return <p>Erreur : {errorPartners}</p>
   }
   return (
     <>
@@ -151,12 +149,12 @@ function Home() {
             besoins avec sérieux et efficacité.
           </StyledAboutDescription>
         </AboutSection>
-        <section>
+        <HomeSectionWrapper>
           <StyledHomeHeading2>Nos prestations</StyledHomeHeading2>
           {loadingPrestations ? (
             <Loader />
           ) : (
-            <StyledPrestations>
+            <CardsWrapper>
               {dataPrestations.map((prestation) => (
                 <ServiceCard
                   title={prestation.name}
@@ -166,17 +164,17 @@ function Home() {
                   key={prestation.id}
                 />
               ))}
-            </StyledPrestations>
+            </CardsWrapper>
           )}
-        </section>
+        </HomeSectionWrapper>
         <CallToAction
-          CTAText="Une de nos prestations vous intérresse ? N’hésitez pas"
+          CTAText="Une de nos prestations vous intéresse ? N’hésitez pas"
           linkHref="#"
         />
         {/* Partie derniers travaux */}
-        <LastWorkWrapper>
+        <HomeSectionWrapper>
           <StyledHomeHeading2>nos derniéres réalisations</StyledHomeHeading2>
-          <LastWorks>
+          <CardsWrapper>
             {loadingLastWorks ? (
               <Loader />
             ) : (
@@ -190,8 +188,27 @@ function Home() {
                 />
               ))
             )}
-          </LastWorks>
-        </LastWorkWrapper>
+          </CardsWrapper>
+        </HomeSectionWrapper>
+        {/* Ils nous font confiance */}
+        <HomeSectionWrapper>
+          <StyledHomeHeading2>Ils nous font confiance</StyledHomeHeading2>
+          <CardsWrapper>
+            {loadingPartners ? (
+              <Loader />
+            ) : (
+              dataPartners.map((partner) => (
+                <PartnerCard
+                  key={partner.id}
+                  url={partner.image.url}
+                  alt={partner.image.alt}
+                  linkWebsite={partner.site_web}
+                  partnerName={partner.name}
+                />
+              ))
+            )}
+          </CardsWrapper>
+        </HomeSectionWrapper>
       </HomePageWrapper>
     </>
   )
