@@ -9,6 +9,7 @@ import Loader from '../../components/Loader/index.jsx'
 import { useMemo } from 'react'
 import ServiceCard from '../../components/ServiceCard/index.jsx'
 import CallToAction from '../../components/CallToAction/index.jsx'
+import ProjectCard from '../../components/ProjectCard/index.jsx'
 
 const HomePageWrapper = styled.section`
   margin: clamp(1rem, 3vw, 3.75rem);
@@ -16,7 +17,7 @@ const HomePageWrapper = styled.section`
 const AboutSection = styled.section`
   display: flex;
   flex-direction: column;
-  margin-top: clamp(1.5rem, 6vw, 2rem);
+  margin-top: clamp(2.5rem, 10vw, 4rem);
   ${fadeInUp};
 
   @media (prefers-reduced-motion: reduce) {
@@ -35,9 +36,32 @@ const AboutSection = styled.section`
     column-gap: 1.25rem;
   }
 `
+const LastWorkWrapper = styled.section`
+  display: flex;
+  flex-direction: column;
+  margin-top: clamp(2.5rem, 4vw + 1rem, 4rem);
+`
+const LastWorks = styled.section`
+  display: flex;
+  flex-direction: row;
+  flex-wrap: wrap;
+  justify-content: center;
+  gap: clamp(1rem, 2vw, 2rem);
+  width: 100%;
+  margin-top: clamp(1.5rem, 4vw, 2rem);
+  ${fadeInUp};
+
+  @media (prefers-reduced-motion: reduce) {
+    animation: none;
+    transform: none;
+    opacity: 1;
+  }
+`
+
 const StyledHomeHeading2 = styled.h2`
   color: ${colors.black};
   text-align: center;
+  text-transform: uppercase;
 
   @media screen and (min-width: 426px) {
     text-align: left;
@@ -85,13 +109,23 @@ const StyledPrestations = styled.section`
 function Home() {
   const options = useMemo(() => ({}), [])
   const {
-    loading,
-    error,
+    loading: loadingPrestations,
+    error: errorPrestations,
     data: dataPrestations,
   } = useApi('prestations/', options)
 
-  if (error) {
-    return <p>Erreur : {error}</p>
+  const {
+    loading: loadingLastWorks,
+    error: errorLastWorks,
+    data: dataLastWorks,
+  } = useApi('works/latest?limit=3&sort=end_date', options)
+
+  if (errorPrestations) {
+    return <p>Erreur : {errorPrestations}</p>
+  }
+
+  if (errorLastWorks) {
+    return <p>Erreur: {errorLastWorks}</p>
   }
   return (
     <>
@@ -119,7 +153,7 @@ function Home() {
         </AboutSection>
         <section>
           <StyledHomeHeading2>Nos prestations</StyledHomeHeading2>
-          {loading ? (
+          {loadingPrestations ? (
             <Loader />
           ) : (
             <StyledPrestations>
@@ -139,6 +173,25 @@ function Home() {
           CTAText="Une de nos prestations vous intérresse ? N’hésitez pas"
           linkHref="#"
         />
+        {/* Partie derniers travaux */}
+        <LastWorkWrapper>
+          <StyledHomeHeading2>nos derniéres réalisations</StyledHomeHeading2>
+          <LastWorks>
+            {loadingLastWorks ? (
+              <Loader />
+            ) : (
+              dataLastWorks.map((work) => (
+                <ProjectCard
+                  url={work.image.url}
+                  alt={work.image.alt}
+                  client={work.client.displayName}
+                  endDate={work.endDate}
+                  key={work.id}
+                />
+              ))
+            )}
+          </LastWorks>
+        </LastWorkWrapper>
       </HomePageWrapper>
     </>
   )
