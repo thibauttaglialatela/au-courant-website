@@ -146,7 +146,10 @@ function Navbar() {
       </MenuWrapper>
 
       {/* Bouton burger */}
-      <BurgerMenuWrapper onClick={() => setIsOpen(!isOpen)}>
+      <BurgerMenuWrapper
+        onClick={() => setIsOpen(!isOpen)}
+        aria-label="Burger menu"
+      >
         {isOpen ? closeMenu : burgerMenu}
       </BurgerMenuWrapper>
     </StyledNavbar>
