@@ -1,7 +1,6 @@
 import Button from '../Button'
 import styled from 'styled-components'
 import PropTypes from 'prop-types'
-import colors from '../../utils/style/colors'
 
 const StyledCard = styled.article`
   display: flex;
@@ -9,7 +8,6 @@ const StyledCard = styled.article`
   gap: 0.6rem;
   width: clamp(24rem, 33%, 26rem);
   aspect-ratio: 2/3;
-  border: solid 1px ${colors.primary};
   border-radius: 8px;
 
   @media screen and (min-width: 426px) {
