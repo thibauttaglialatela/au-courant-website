@@ -11,6 +11,7 @@ import ServiceCard from '../../components/ServiceCard/index.jsx'
 import CallToAction from '../../components/CallToAction/index.jsx'
 import ProjectCard from '../../components/ProjectCard/index.jsx'
 import PartnerCard from '../../components/PartnerCard/index.jsx'
+import Carousel from '../../components/Carousel/index.jsx'
 
 const HomePageWrapper = styled.section`
   margin: clamp(1rem, 3vw, 3.75rem);
@@ -125,6 +126,7 @@ function Home() {
   if (errorPartners) {
     return <p>Erreur : {errorPartners}</p>
   }
+
   return (
     <>
       <Header
@@ -208,6 +210,11 @@ function Home() {
               ))
             )}
           </CardsWrapper>
+        </HomeSectionWrapper>
+        {/* Avis clients */}
+        <HomeSectionWrapper>
+          <StyledHomeHeading2>Les avis de nos clients</StyledHomeHeading2>
+          <Carousel />
         </HomeSectionWrapper>
       </HomePageWrapper>
     </>
