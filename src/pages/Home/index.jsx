@@ -12,6 +12,7 @@ import CallToAction from '../../components/CallToAction/index.jsx'
 import ProjectCard from '../../components/ProjectCard/index.jsx'
 import PartnerCard from '../../components/PartnerCard/index.jsx'
 import Carousel from '../../components/Carousel/index.jsx'
+import CertificationCard from '../../components/CertificationCard/index.jsx'
 
 const HomePageWrapper = styled.section`
   margin: clamp(1rem, 3vw, 3.75rem);
@@ -115,6 +116,12 @@ function Home() {
     data: dataPartners,
   } = useApi('partners/', options)
 
+  const {
+    loading: loadingValidCertifications,
+    error: errorValidCertifications,
+    data: dataValidCertifications,
+  } = useApi('certifications/?valid=true', options)
+
   if (errorPrestations) {
     return <p>Erreur : {errorPrestations}</p>
   }
@@ -125,6 +132,10 @@ function Home() {
 
   if (errorPartners) {
     return <p>Erreur : {errorPartners}</p>
+  }
+
+  if (errorValidCertifications) {
+    return <p>Erreur : {errorValidCertifications}</p>
   }
 
   return (
@@ -215,6 +226,23 @@ function Home() {
         <HomeSectionWrapper>
           <StyledHomeHeading2>Les avis de nos clients</StyledHomeHeading2>
           <Carousel />
+        </HomeSectionWrapper>
+        <HomeSectionWrapper>
+          <StyledHomeHeading2>Certifications</StyledHomeHeading2>
+          <CardsWrapper>
+            {loadingValidCertifications ? (
+              <Loader />
+            ) : (
+              dataValidCertifications.map((certification) => (
+                <CertificationCard
+                  key={certification.id}
+                  certificationName={certification.name}
+                  pictureUrl={certification.image.url}
+                  pictureAlt={certification.image.alt}
+                />
+              ))
+            )}
+          </CardsWrapper>
         </HomeSectionWrapper>
       </HomePageWrapper>
     </>
