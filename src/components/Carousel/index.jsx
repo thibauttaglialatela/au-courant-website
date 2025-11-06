@@ -27,7 +27,7 @@ const ArrowsRow = styled.div`
 `
 
 const ArrowButton = styled.button`
-  background: ${(props) => props.bg || colors.secondary};
+  background: ${(props) => props.$bg || colors.secondary};
   color: ${colors.black};
   border: none;
   width: 3.5rem;
@@ -72,8 +72,10 @@ function Carousel() {
   const settings = {
     dots: true,
     infinite: true,
-    slidesToShow: 3,
+    slidesToShow: 4,
     slidesToScroll: 1,
+    autoplay: true,
+    autoplaySpeed: 100000,
     responsive: [
       {
         breakpoint: 1024,
@@ -113,13 +115,13 @@ function Carousel() {
           {/* Flèches visibles uniquement sur mobile */}
           <ArrowsRow>
             <ArrowButton
-              bg={colors.secondary}
+              $bg={colors.secondary}
               onClick={() => sliderRef.current.slickPrev()}
             >
               ◀
             </ArrowButton>
             <ArrowButton
-              bg={colors.secondary}
+              $bg={colors.secondary}
               onClick={() => sliderRef.current.slickNext()}
             >
               ▶
