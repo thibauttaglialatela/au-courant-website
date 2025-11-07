@@ -1,0 +1,12 @@
+---
+deployment:
+  tasks:
+    - export DEPLOYPATH=/home/fhor9931/public_html/au-courant-website/
+    - echo "Nettoyage du répertoire de déploiement..."
+    - /bin/rm -rf $DEPLOYPATH/*
+    - echo "Installation des dépendances..."
+    - /usr/local/bin/npm ci
+    - echo "Construction du projet Vite..."
+    - /usr/local/bin/npm run build
+    - echo "Copie des fichiers générés vers le répertoire public..."
+    - /bin/cp -R dist/* $DEPLOYPATH
