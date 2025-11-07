@@ -22,7 +22,7 @@ const StyledCTAText = styled.p`
 `
 
 const StyledCTALink = styled.a`
-  height: 4.25rem;
+  width: 15rem;
   background-color: ${colors.secondary};
   text-decoration: none;
   color: ${colors.black};
