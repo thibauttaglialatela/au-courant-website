@@ -244,6 +244,12 @@ function Home() {
             )}
           </CardsWrapper>
         </HomeSectionWrapper>
+
+        {/* Mettre le CTA invitant à demander un devis */}
+        <CallToAction
+          CTAText="Demandez votre devis gratuit en ligne et discutons de votre projet"
+          linkHref="#"
+        />
       </HomePageWrapper>
     </>
   )
