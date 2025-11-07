@@ -13,6 +13,15 @@ const StyledCardWrapper = styled.article`
 const CardPicture = styled.img`
   width: 100%;
   height: 12.5rem;
+  object-fit: cover;
+  border: 0 solid ${colors.black};
+  border-right-width: 4px;
+  border-bottom-width: 4px;
+
+  &:hover {
+    transform: translateY(-4px);
+    box-shadow: 0 4px 4px 0 ${colors.black};
+  }
 `
 const CardTitle = styled.h4`
   text-align: center;
