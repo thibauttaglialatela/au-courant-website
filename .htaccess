@@ -4,8 +4,7 @@ Options -MultiViews
 # Active la réécriture d'URL
 RewriteEngine On
 
-# Base du site (doit correspondre à ton sous-dossier exact)
-RewriteBase /au-courant-website/
+RewriteBase /
 
 # Laisse passer les fichiers existants
 RewriteCond %{REQUEST_FILENAME} -f [OR]
