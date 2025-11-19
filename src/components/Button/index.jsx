@@ -1,6 +1,7 @@
 import styled, { css } from 'styled-components'
 import PropTypes from 'prop-types'
 import colors from '../../utils/style/colors'
+import { Link } from 'react-router'
 
 const baseStyles = css`
   display: inline-block;
@@ -61,8 +62,13 @@ const StyledButton = styled.button`
   ${baseStyles}
 `
 
+const StyledRouterLink = styled(Link)`
+  ${baseStyles}
+`
+
 /**
  * @param {string} href - Si présent -> lien <a>
+ * @param {string} to - Si présent -> lien <Link>
  * @param {string} $variant - "generic" | "secondary"
  * @param {string} $size - "small" | "large"
  * @param {ReactNode} children - Texte ou contenu du bouton
@@ -70,6 +76,7 @@ const StyledButton = styled.button`
  */
 
 function Button({
+  to,
   href,
   onClick,
   children,
@@ -82,6 +89,14 @@ function Button({
       <StyledLinkButton href={href} $variant={variant} $size={size} {...rest}>
         {children}
       </StyledLinkButton>
+    )
+  }
+
+  if (to) {
+    return (
+      <StyledRouterLink to={to} $variant={variant} $size={size} {...rest}>
+        {children}
+      </StyledRouterLink>
     )
   }
 
@@ -99,6 +114,7 @@ function Button({
 }
 
 Button.propTypes = {
+  to: PropTypes.string,
   href: PropTypes.string,
   onClick: PropTypes.func,
   children: PropTypes.node.isRequired,
