@@ -175,6 +175,7 @@ function Home() {
                   imageUrl={prestation.image.url}
                   imageAlt={prestation.image.alt}
                   key={prestation.id}
+                  id={prestation.id}
                 />
               ))}
             </CardsWrapper>

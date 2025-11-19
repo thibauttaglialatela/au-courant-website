@@ -33,18 +33,20 @@ const CardBody = styled.p`
   color: ${colors.black};
   margin: 0;
 `
-function ServiceCard({ title, price, imageUrl, imageAlt }) {
+
+function ServiceCard({ title, price, imageUrl, imageAlt, id }) {
   return (
     <StyledCardWrapper>
       <CardPicture src={imageUrl} alt={imageAlt} />
       <CardTitle>{title}</CardTitle>
       <CardBody>Tarif : {price} € HT</CardBody>
-      <Button href="#">En savoir plus</Button>
+      <Button to={{ pathname: `/prestation/${id}` }}>En savoir plus</Button>
     </StyledCardWrapper>
   )
 }
 
 ServiceCard.propTypes = {
+  id: PropTypes.string.isRequired,
   title: PropTypes.string.isRequired,
   price: PropTypes.number.isRequired,
   imageUrl: PropTypes.string,
