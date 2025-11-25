@@ -6,7 +6,7 @@ const StyledCard = styled.article`
   display: flex;
   flex-direction: column;
   gap: 0.6rem;
-  width: clamp(24rem, 33%, 26rem);
+  max-width: clamp(24rem, 33%, 26rem);
   aspect-ratio: 2/3;
   border-radius: 8px;
 
