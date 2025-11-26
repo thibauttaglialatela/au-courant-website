@@ -32,7 +32,7 @@ const StyledCardTitle = styled.h4`
 const StyledCardDate = styled.p`
   text-align: center;
 `
-function ProjectCard({ url, alt, client, endDate }) {
+function ProjectCard({ url, alt, client, endDate, id }) {
   const date = new Date(endDate)
   const formattedDate = date.toLocaleDateString('fr-FR', {
     day: 'numeric',
@@ -44,7 +44,8 @@ function ProjectCard({ url, alt, client, endDate }) {
       <StyledCardPicture src={url} alt={alt} />
       <StyledCardTitle>{client}</StyledCardTitle>
       <StyledCardDate>date de fin: le {formattedDate}</StyledCardDate>
-      <Button href="#">En savoir plus</Button>
+      {/* <Button href={to path}>En savoir plus</Button> */}
+      <Button to={{ pathname: `/works/${id}` }}>En savoir plus</Button>
     </StyledCard>
   )
 }
@@ -54,6 +55,7 @@ ProjectCard.propTypes = {
   alt: PropTypes.string.isRequired,
   client: PropTypes.string,
   endDate: PropTypes.string,
+  id: PropTypes.string.isRequired,
 }
 
 export default ProjectCard

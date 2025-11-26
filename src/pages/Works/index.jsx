@@ -76,6 +76,7 @@ function Works() {
               alt={work.image.alt}
               client={work.client.displayName}
               endDate={work.endDate}
+              id={work.id}
             />
           ))}
         </WorksContainer>

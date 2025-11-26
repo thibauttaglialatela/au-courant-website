@@ -104,8 +104,8 @@ function Button({
     <StyledButton
       type="button"
       onClick={onClick}
-      variant={variant}
-      size={size}
+      $variant={variant}
+      $size={size}
       {...rest}
     >
       {children}
