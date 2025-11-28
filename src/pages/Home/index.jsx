@@ -199,6 +199,7 @@ function Home() {
                   client={work.client.displayName}
                   endDate={work.endDate}
                   key={work.id}
+                  id={work.id}
                 />
               ))
             )}

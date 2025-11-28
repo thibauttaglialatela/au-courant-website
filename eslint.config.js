@@ -33,6 +33,7 @@ export default [
       // 🚀 ajustements spécifiques à React 17+
       'react/react-in-jsx-scope': 'off',
       'react/jsx-uses-react': 'off',
+      'react/no-unescaped-entities': 'off',
 
       // Exemple de règle perso : ignore les variables majuscules non utilisées (ex: constantes env)
       'no-unused-vars': ['error', { varsIgnorePattern: '^[A-Z_]' }],
