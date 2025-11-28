@@ -5,6 +5,7 @@ import Works from './pages/Works/index.jsx'
 import GlobalStyle from './globalStyles.js'
 import Layout from './components/Layout/index.jsx'
 import ServiceDetailPage from './pages/ServiceDetailPage/index.jsx'
+import WorkDetailPage from './pages/WorkDetailPage/index.jsx'
 
 createRoot(document.getElementById('root')).render(
   <BrowserRouter>
@@ -16,7 +17,10 @@ createRoot(document.getElementById('root')).render(
           path="/prestation/:prestationId"
           element={<ServiceDetailPage />}
         />
-        <Route path="/works" element={<Works />} />
+        <Route path="/works">
+          <Route index element={<Works />} />
+          <Route path=":id" element={<WorkDetailPage />} />
+        </Route>
       </Routes>
     </Layout>
   </BrowserRouter>,
