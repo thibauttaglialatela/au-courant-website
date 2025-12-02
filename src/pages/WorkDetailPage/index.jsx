@@ -86,7 +86,14 @@ const WorkDetailPage = () => {
   /** 2️⃣ Error handling */
   if (error) {
     if (error.status === 404) {
-      return <Page404 errorMessage={error.message} statusError={error.status} />
+      return (
+        <Page404
+          errorMessage={error.message}
+          statusError={error.status}
+          buttonLabel="Retour à la liste des travaux"
+          buttonLink="/works"
+        />
+      )
     }
     return <p>Erreur : {error.message}</p>
   }
