@@ -17,7 +17,6 @@ createRoot(document.getElementById('root')).render(
           path="/prestation/:prestationId"
           element={<ServiceDetailPage />}
         />
-        {/* <Route path="/works" element={<Works />} /> */}
         <Route path="/works">
           <Route index element={<Works />} />
           <Route path=":id" element={<WorkDetailPage />} />

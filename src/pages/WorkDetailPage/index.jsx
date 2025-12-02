@@ -4,6 +4,7 @@ import useApi from '../../utils/hooks/useApi'
 import styled from 'styled-components'
 import Loader from '../../components/Loader'
 import Button from '../../components/Button'
+import Page404 from '../../components/404Page'
 
 const WorkPageWrapper = styled.section`
   margin: 2rem 0.75rem 2.5rem 0.75rem;
@@ -55,11 +56,10 @@ const PicturesContainer = styled.section`
     display: grid;
     grid-template-columns: repeat(3, 1fr);
     grid-template-rows: repeat(2, 1fr);
-    grid-column-gap: 1.5rem;
-    grid-row-gap: 1.5rem;
-    margin: 0 auto;
+    gap: 1.5rem;
     margin-bottom: 2rem;
     max-width: fit-content;
+    margin: 0 auto;
   }
 `
 
@@ -67,10 +67,6 @@ const WorkImage = styled.img`
   width: 100%;
   aspect-ratio: 1/1;
   object-fit: cover;
-
-  @media screen and (min-width: 426px) {
-    justify-self: center;
-  }
 `
 const ButtonContainer = styled.div`
   margin: 0 auto;
@@ -81,17 +77,25 @@ const ButtonContainer = styled.div`
 `
 
 const WorkDetailPage = () => {
-  let params = useParams()
-  const { loading, error, data } = useApi(`works/${params.id}`)
+  const { id } = useParams()
+  const { loading, error, data } = useApi(`works/${id}`)
 
+  /** 1️⃣ Loading */
   if (loading) return <Loader />
-  if (error) return <p>Erreur dans le chargement des données</p>
-  if (!data) return <p>Aucune donnée trouvée</p>
 
-  const dateObj = data?.startDate ? new Date(data?.startDate) : null
+  /** 2️⃣ Error handling */
+  if (error) {
+    if (error.status === 404) {
+      return <Page404 errorMessage={error.message} statusError={error.status} />
+    }
+    return <p>Erreur : {error.message}</p>
+  }
+
+  /** 3️⃣ Success */
+  const dateObj = data?.startDate ? new Date(data.startDate) : null
   const formatedDate = dateObj
     ? new Intl.DateTimeFormat('fr-FR', { dateStyle: 'long' }).format(dateObj)
-    : 'date inconnue'
+    : 'Date inconnue'
 
   return (
     <>
@@ -100,15 +104,19 @@ const WorkDetailPage = () => {
         <DescriptionSection>
           <DescriptionTitle>Description des travaux effectués</DescriptionTitle>
           <DescriptionContent>{data?.description}</DescriptionContent>
+
           <DurationParagraph>
-            Début des travaux : le {formatedDate}
+            Début des travaux : {formatedDate}
           </DurationParagraph>
+
           <DurationParagraph>
-            Durée d'intervention : {data.durationInDays} jours
+            Durée d'intervention : {data?.durationInDays} jours
           </DurationParagraph>
         </DescriptionSection>
+
         <PicturesSection>
           <DescriptionTitle>Photos du chantier</DescriptionTitle>
+
           <PicturesContainer>
             {data?.images?.length > 0 ? (
               data.images.map((image) => (
