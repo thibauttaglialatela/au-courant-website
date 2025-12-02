@@ -6,6 +6,7 @@ import GlobalStyle from './globalStyles.js'
 import Layout from './components/Layout/index.jsx'
 import ServiceDetailPage from './pages/ServiceDetailPage/index.jsx'
 import WorkDetailPage from './pages/WorkDetailPage/index.jsx'
+import ContactPage from './pages/ContactPage/index.jsx'
 
 createRoot(document.getElementById('root')).render(
   <BrowserRouter>
@@ -21,6 +22,7 @@ createRoot(document.getElementById('root')).render(
           <Route index element={<Works />} />
           <Route path=":id" element={<WorkDetailPage />} />
         </Route>
+        <Route path="/contact" element={<ContactPage />} />
       </Routes>
     </Layout>
   </BrowserRouter>,
