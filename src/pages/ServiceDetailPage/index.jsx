@@ -4,12 +4,12 @@ import { useParams } from 'react-router'
 import useApi from '../../utils/hooks/useApi'
 import Loader from '../../components/Loader/index'
 import Button from '../../components/Button/index'
+import Page404 from '../../components/404Page'
 
 const PrestationPageWrapper = styled.section`
-    margin: 2.5rem 0.75rem 2.5rem 0.75rem;
-    display: flex;
-    justify-content: center;
-  }
+  margin: 2.5rem 0.75rem 2.5rem 0.75rem;
+  display: flex;
+  justify-content: center;
 `
 const PrestationCard = styled.article`
   display: flex;
@@ -49,23 +49,47 @@ function ServiceDetailPage() {
   if (loading) return <Loader />
 
   if (error) {
-    return <p>Les données ne peuvent être chargée</p>
+    if (error.status === 404) {
+      return (
+        <Page404
+          errorMessage={error.message}
+          statusError={error.status}
+          buttonLabel="Retour à l'accueil"
+          buttonLink="/"
+        />
+      )
+    }
+    return <p>Erreur : {error.message}</p>
   }
 
-  if (!prestation) return null
+  if (!prestation) {
+    return (
+      <Page404
+        errorMessage="Aucune donnée trouvée"
+        statusError=""
+        buttonLabel="Retour"
+        buttonLink="/"
+      />
+    )
+  }
 
   return (
     <>
       <Header title={prestation.name} />
       <PrestationPageWrapper>
         <PrestationCard>
-          <StyledImage src={prestation.image.url} alt={prestation.image.alt} />
+          {prestation.image && (
+            <StyledImage
+              src={prestation.image.url}
+              alt={prestation.image.alt || 'Illustration de la prestation'}
+            />
+          )}
           <StyledInformation>
             <p>{prestation.description}</p>
             <p>
               Tarif : <strong>{prestation.tarif} € TTC</strong>
             </p>
-            <Button href="#" size="small">
+            <Button to="#" size="small">
               Demandez un devis
             </Button>
           </StyledInformation>
