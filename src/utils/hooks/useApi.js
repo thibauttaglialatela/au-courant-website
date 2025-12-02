@@ -5,7 +5,7 @@ const useApi = (endpoint, options) => {
     import.meta.env.VITE_API_URL_DEV || import.meta.env.VITE_API_URL
 
   const [data, setData] = useState(null)
-  const [error, setError] = useState(null)   // passe en objet
+  const [error, setError] = useState(null) // passe en objet
   const [loading, setLoading] = useState(true)
 
   const abortControllerRef = useRef()
@@ -24,14 +24,14 @@ const useApi = (endpoint, options) => {
         signal: abortController.signal,
       })
 
-      const contentType = response.headers.get("content-type")
-      const isJson = contentType && contentType.includes("application/json")
+      const contentType = response.headers.get('content-type')
+      const isJson = contentType && contentType.includes('application/json')
       const body = isJson ? await response.json().catch(() => null) : null
 
       if (!response.ok) {
         setError({
           status: body?.status ?? response.status,
-          message: body?.message ?? "Erreur serveur",
+          message: body?.message ?? 'Erreur serveur',
         })
         setData(null)
         return
@@ -39,14 +39,13 @@ const useApi = (endpoint, options) => {
 
       setData(body)
       setError(null)
-
     } catch (err) {
-      if (err.name === "AbortError") return
+      if (err.name === 'AbortError') return
 
       // erreur réseau ou fetch
       setError({
         status: 0,
-        message: err.message || "Erreur inconnue"
+        message: err.message || 'Erreur inconnue',
       })
     } finally {
       setLoading(false)
