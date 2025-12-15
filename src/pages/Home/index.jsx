@@ -183,7 +183,7 @@ function Home() {
         </HomeSectionWrapper>
         <CallToAction
           CTAText="Une de nos prestations vous intéresse ? N’hésitez pas"
-          linkHref="#"
+          linkHref="/contact"
         />
         {/* Partie derniers travaux */}
         <HomeSectionWrapper>
@@ -250,7 +250,7 @@ function Home() {
         {/* Mettre le CTA invitant à demander un devis */}
         <CallToAction
           CTAText="Demandez votre devis gratuit en ligne et discutons de votre projet"
-          linkHref="#"
+          linkHref="contact"
         />
       </HomePageWrapper>
     </>
