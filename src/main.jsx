@@ -7,6 +7,7 @@ import Layout from './components/Layout/index.jsx'
 import ServiceDetailPage from './pages/ServiceDetailPage/index.jsx'
 import WorkDetailPage from './pages/WorkDetailPage/index.jsx'
 import ContactPage from './pages/ContactPage/index.jsx'
+import 'leaflet/dist/leaflet.css'
 
 createRoot(document.getElementById('root')).render(
   <BrowserRouter>
