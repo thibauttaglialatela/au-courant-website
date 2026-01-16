@@ -4,6 +4,7 @@ import typography from '../../utils/style/typography'
 import FormField from '../../components/FormField'
 import Button from '../../components/Button'
 import RgpdModalCard from '../../components/RgpdModalCard'
+import MapCard from '../../components/MapCard'
 import { useForm } from 'react-hook-form'
 import colors from '../../utils/style/colors'
 import { useState } from 'react'
@@ -37,14 +38,6 @@ const AddressSectionTitle = styled.h2`
   @media screen and (min-width: 426px) {
     font-size: 2.5rem;
     margin-bottom: 2rem;
-  }
-`
-const MapImage = styled.img`
-  width: 100%;
-  margin-bottom: 1rem;
-
-  @media screen and (min-width: 426px) {
-    width: 32rem;
   }
 `
 const StyledErrorMessage = styled.p`
@@ -206,14 +199,11 @@ function ContactPage() {
           </StyledForm>
 
           <AddressSectionTitle>Où nous trouver ?</AddressSectionTitle>
-          <MapImage
-            src="https://www.placeholderimage.eu/api/city/id/4/260/260"
-            alt="carte"
-          />
+          <MapCard />
           <StyledAddress>
             2 rue Chevreul
             <br />
-            75012 Paris
+            94700 Maisons-Alfort
             <br />
             01 48 99 36 22
             <br />
