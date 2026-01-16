@@ -8,6 +8,7 @@ import ServiceDetailPage from './pages/ServiceDetailPage/index.jsx'
 import WorkDetailPage from './pages/WorkDetailPage/index.jsx'
 import ContactPage from './pages/ContactPage/index.jsx'
 import 'leaflet/dist/leaflet.css'
+import LoginPage from './pages/LoginPage/index.jsx'
 
 createRoot(document.getElementById('root')).render(
   <BrowserRouter>
@@ -24,6 +25,7 @@ createRoot(document.getElementById('root')).render(
           <Route path=":id" element={<WorkDetailPage />} />
         </Route>
         <Route path="/contact" element={<ContactPage />} />
+        <Route path="/login" element={<LoginPage />} />
       </Routes>
     </Layout>
   </BrowserRouter>,
