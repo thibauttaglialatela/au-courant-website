@@ -9,12 +9,13 @@ import WorkDetailPage from './pages/WorkDetailPage/index.jsx'
 import ContactPage from './pages/ContactPage/index.jsx'
 import 'leaflet/dist/leaflet.css'
 import LoginPage from './pages/LoginPage/index.jsx'
+import Dashboard from './pages/admin/Dashboard.jsx'
 
 createRoot(document.getElementById('root')).render(
   <BrowserRouter>
     <GlobalStyle />
-    <Layout>
-      <Routes>
+    <Routes>
+      <Route element={<Layout />}>
         <Route path="/" element={<Home />} />
         <Route
           path="/prestation/:prestationId"
@@ -26,7 +27,11 @@ createRoot(document.getElementById('root')).render(
         </Route>
         <Route path="/contact" element={<ContactPage />} />
         <Route path="/login" element={<LoginPage />} />
-      </Routes>
-    </Layout>
+      </Route>
+
+      <Route path="/admin">
+        <Route index element={<Dashboard />} />
+      </Route>
+    </Routes>
   </BrowserRouter>,
 )
