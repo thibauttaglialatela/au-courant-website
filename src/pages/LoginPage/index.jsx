@@ -2,6 +2,7 @@ import Button from '../../components/Button'
 import FormField from '../../components/FormField'
 import Header from '../../components/Header'
 import { useForm } from 'react-hook-form'
+import { useNavigate } from 'react-router'
 import styled from 'styled-components'
 import colors from '../../utils/style/colors'
 import { useState } from 'react'
@@ -36,6 +37,8 @@ const StyledLoginFormWrapper = styled.section`
 `
 
 function LoginPage() {
+  const navigate = useNavigate()
+
   const {
     register,
     handleSubmit,
@@ -51,7 +54,7 @@ function LoginPage() {
 
     try {
       const response = await fetch(
-        import.meta.env.VITE_API_URL + 'login_check',
+        import.meta.env.VITE_API_URL + 'api/login_check',
         {
           method: 'POST',
           headers: {
@@ -64,6 +67,11 @@ function LoginPage() {
 
       if (!response.ok) {
         setApiError(true)
+        return
+      }
+
+      if (response.ok) {
+        navigate('/admin')
         return
       }
     } catch (err) {

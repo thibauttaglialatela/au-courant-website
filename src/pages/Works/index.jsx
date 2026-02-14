@@ -48,7 +48,7 @@ function Works() {
     loading,
     error,
     data: works,
-  } = useApi(`works/list?page=${page}&limit=3`)
+  } = useApi(`api/works/list?page=${page}&limit=3`)
 
   const nextPage = () => {
     setPage(page + 1)
