@@ -78,7 +78,7 @@ const ButtonContainer = styled.div`
 
 const WorkDetailPage = () => {
   const { id } = useParams()
-  const { loading, error, data } = useApi(`works/${id}`)
+  const { loading, error, data } = useApi(`api/works/${id}`)
 
   /** 1️⃣ Loading */
   if (loading) return <Loader />

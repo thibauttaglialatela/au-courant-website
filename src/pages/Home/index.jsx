@@ -102,25 +102,25 @@ function Home() {
     loading: loadingPrestations,
     error: errorPrestations,
     data: dataPrestations,
-  } = useApi('prestations/', options)
+  } = useApi('api/prestations/', options)
 
   const {
     loading: loadingLastWorks,
     error: errorLastWorks,
     data: dataLastWorks,
-  } = useApi('works/latest?limit=3&sort=end_date', options)
+  } = useApi('api/works/latest?limit=3&sort=end_date', options)
 
   const {
     loading: loadingPartners,
     error: errorPartners,
     data: dataPartners,
-  } = useApi('partners/', options)
+  } = useApi('api/partners/', options)
 
   const {
     loading: loadingValidCertifications,
     error: errorValidCertifications,
     data: dataValidCertifications,
-  } = useApi('certifications/?valid=true', options)
+  } = useApi('api/certifications/?valid=true', options)
 
   if (errorPrestations) {
     return <p>Erreur : {errorPrestations}</p>

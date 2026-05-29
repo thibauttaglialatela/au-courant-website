@@ -44,7 +44,7 @@ function ServiceDetailPage() {
     loading,
     error,
     data: prestation,
-  } = useApi(`prestations/${prestationId}`)
+  } = useApi(`api/prestations/${prestationId}`)
 
   if (loading) return <Loader />
 
