@@ -11,6 +11,7 @@ import 'leaflet/dist/leaflet.css'
 import LoginPage from './pages/LoginPage/index.jsx'
 import Dashboard from './pages/admin/Dashboard.jsx'
 import ProtectedRoute from './components/ProtectedRoute/index.jsx'
+import Certifications from './pages/admin/Certifications.jsx'
 
 createRoot(document.getElementById('root')).render(
   <BrowserRouter>
@@ -33,6 +34,7 @@ createRoot(document.getElementById('root')).render(
       <Route element={<ProtectedRoute />}>
         <Route path="/admin">
           <Route index element={<Dashboard />} />
+          <Route path="certifications" element={<Certifications />} />
         </Route>
       </Route>
     </Routes>
