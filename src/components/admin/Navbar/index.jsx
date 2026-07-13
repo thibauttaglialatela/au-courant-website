@@ -37,7 +37,7 @@ function Navbar() {
       <NavAdminMenu>
         <StyledNavLink to="/admin">Prestations</StyledNavLink>
         <StyledNavLink to="#">Articles</StyledNavLink>
-        <StyledNavLink to="#">Catégories</StyledNavLink>
+        <StyledNavLink to="/admin/certifications">Certifications</StyledNavLink>
         <StyledNavLink to="#">Services</StyledNavLink>
         <StyledNavLink to="#">Se déconnecter</StyledNavLink>
       </NavAdminMenu>
