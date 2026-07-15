@@ -1,6 +1,7 @@
 import styled from 'styled-components'
 import colors from '../../../utils/style/colors'
 import { NavLink } from 'react-router'
+import Logout from '../../LogOut'
 
 const StyledVerticalNavbar = styled.nav`
   height: 100%;
@@ -39,7 +40,7 @@ function Navbar() {
         <StyledNavLink to="#">Articles</StyledNavLink>
         <StyledNavLink to="/admin/certifications">Certifications</StyledNavLink>
         <StyledNavLink to="#">Services</StyledNavLink>
-        <StyledNavLink to="#">Se déconnecter</StyledNavLink>
+        <Logout />
       </NavAdminMenu>
     </StyledVerticalNavbar>
   )
