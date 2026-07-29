@@ -1,11 +1,13 @@
 import { useEffect, useState } from 'react'
-import { useNavigate } from 'react-router'
+import { NavLink, useLocation, useNavigate } from 'react-router'
 import Loader from '../../components/Loader'
 import Navbar from '../../components/admin/Navbar'
 import { useMemo } from 'react'
 import useApi from '../../utils/hooks/useApi'
 
 function Dashboard() {
+  const location = useLocation()
+  const message = location.state?.successMessage
   const navigate = useNavigate()
   const [error, setError] = useState(false)
   const [loading, setLoading] = useState(false)
@@ -61,6 +63,12 @@ function Dashboard() {
         </aside>
         <main className="col-12 col-md-9 col-lg-10 p-4 d-flex flex-column min-vh-100">
           <h1 className="text-center text-decoration-underline">Prestations</h1>
+          <section className="col-12 d-flex flex-row justify-content-center my-5">
+            <NavLink to="prestations/add" className="btn btn-info">
+              Ajouter une prestation
+            </NavLink>
+          </section>
+
           {user && (
             <span className="badge bg-secondary mx-auto mb-3">
               Connecté : {user.username}
@@ -71,6 +79,7 @@ function Dashboard() {
             <Loader />
           ) : (
             <section className="table-responsive w-75 shadow-sm rounded bg-white p-3 mx-auto my-auto">
+              {message && <div className="alert alert-success">{message}</div>}
               <table className="table table-striped m-0 align-middle">
                 <thead>
                   <tr>
