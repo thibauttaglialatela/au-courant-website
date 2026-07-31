@@ -47,6 +47,16 @@ function Dashboard() {
     fetchUser()
   }, [navigate])
 
+  const handleDelete = async (id) => {
+    const confirmDelete = window.confirm(
+      'Voulez vous supprimer cette prestation ?',
+    )
+
+    if (!confirmDelete) return
+
+    console.log('id de la prestation à supprimer', id)
+  }
+
   if (error) return <div className="alert alert-danger m-3">{error}</div>
   if (errorPrestations)
     return (
@@ -99,9 +109,12 @@ function Dashboard() {
                         <a href="" className="btn btn-outline-warning">
                           Modifier
                         </a>
-                        <a href="#" className="btn btn-danger">
+                        <button
+                          onClick={() => handleDelete(prestation.id)}
+                          className="btn btn-outline-danger"
+                        >
                           Supprimer
-                        </a>
+                        </button>
                       </td>
                     </tr>
                   ))}
