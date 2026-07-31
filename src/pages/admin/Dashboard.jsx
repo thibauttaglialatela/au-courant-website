@@ -19,6 +19,15 @@ function Dashboard() {
     data: dataPrestations,
   } = useApi('api/admin/prestations', options)
 
+  const [prestationsList, setPrestationsList] = useState([])
+  const [deleteSuccessMessage, setDeleteSuccessMessage] = useState(null)
+
+  useEffect(() => {
+    if (dataPrestations) {
+      setPrestationsList(dataPrestations)
+    }
+  }, [dataPrestations])
+
   useEffect(() => {
     const fetchUser = async () => {
       setLoading(true)
@@ -54,7 +63,29 @@ function Dashboard() {
 
     if (!confirmDelete) return
 
-    console.log('id de la prestation à supprimer', id)
+    try {
+      const response = await fetch(
+        import.meta.env.VITE_API_URL + `api/admin/prestations/delete/${id}`,
+        {
+          method: 'DELETE',
+          credentials: 'include',
+        },
+      )
+
+      if (response.ok) {
+        setPrestationsList((prevList) =>
+          prevList.filter((prestation) => prestation.id !== id),
+        )
+
+        setDeleteSuccessMessage('La prestation a été supprimée')
+
+        setTimeout(() => {
+          setDeleteSuccessMessage(null)
+        }, 4000)
+      }
+    } catch (error) {
+      console.error('Erreur lors de la suppression', error)
+    }
   }
 
   if (error) return <div className="alert alert-danger m-3">{error}</div>
@@ -90,6 +121,11 @@ function Dashboard() {
           ) : (
             <section className="table-responsive w-75 shadow-sm rounded bg-white p-3 mx-auto my-auto">
               {message && <div className="alert alert-success">{message}</div>}
+              {deleteSuccessMessage && (
+                <div className="alert alert-success">
+                  {deleteSuccessMessage}
+                </div>
+              )}
               <table className="table table-striped m-0 align-middle">
                 <thead>
                   <tr>
@@ -100,7 +136,7 @@ function Dashboard() {
                   </tr>
                 </thead>
                 <tbody>
-                  {dataPrestations.map((prestation, index) => (
+                  {prestationsList.map((prestation, index) => (
                     <tr key={index}>
                       <td>{prestation.id}</td>
                       <td>{prestation.name}</td>
@@ -111,7 +147,7 @@ function Dashboard() {
                         </a>
                         <button
                           onClick={() => handleDelete(prestation.id)}
-                          className="btn btn-outline-danger"
+                          className="btn btn-danger"
                         >
                           Supprimer
                         </button>
