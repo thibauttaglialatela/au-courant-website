@@ -142,9 +142,12 @@ function Dashboard() {
                       <td>{prestation.name}</td>
                       <td>{prestation.tarif}</td>
                       <td className="d-flex flex-row justify-content-evenly">
-                        <a href="" className="btn btn-outline-warning">
+                        <NavLink
+                          to={`/admin/prestations/edit/${prestation.id}`}
+                          className="btn btn-outline-warning"
+                        >
                           Modifier
-                        </a>
+                        </NavLink>
                         <button
                           onClick={() => handleDelete(prestation.id)}
                           className="btn btn-danger"
