@@ -14,6 +14,7 @@ import ProtectedRoute from './components/ProtectedRoute/index.jsx'
 import Certifications from './pages/admin/Certifications.jsx'
 import CreatePrestation from './pages/admin/CreatePrestation/index.jsx'
 import EditPrestation from './pages/admin/UpdatePrestation/index.jsx'
+import CreateCertification from './pages/admin/CreateCertification/index.jsx'
 
 createRoot(document.getElementById('root')).render(
   <BrowserRouter>
@@ -37,6 +38,7 @@ createRoot(document.getElementById('root')).render(
         <Route path="/admin">
           <Route index element={<Dashboard />} />
           <Route path="certifications" element={<Certifications />} />
+          <Route path="certifications/add" element={<CreateCertification />} />
           <Route path="prestations/add" element={<CreatePrestation />} />
           <Route path="prestations/edit/:id" element={<EditPrestation />} />
         </Route>

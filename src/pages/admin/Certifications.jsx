@@ -1,5 +1,5 @@
 import { useEffect, useState } from 'react'
-import { useNavigate } from 'react-router'
+import { NavLink, useNavigate } from 'react-router'
 import Loader from '../../components/Loader'
 import Navbar from '../../components/admin/Navbar'
 import { useMemo } from 'react'
@@ -63,6 +63,11 @@ function Certifications() {
           <h1 className="text-center text-decoration-underline">
             Certifications
           </h1>
+          <section className="col-12 d-flex flex-row justify-content-center my-5">
+            <NavLink to="/admin/certifications/add" className="btn btn-info">
+              Ajouter une certification
+            </NavLink>
+          </section>
           {user && (
             <span className="badge bg-secondary mx-auto mb-3">
               Connecté : {user.username}
