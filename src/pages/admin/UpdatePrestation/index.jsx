@@ -1,20 +1,21 @@
 import { useEffect, useState } from 'react'
 import { useNavigate, useParams } from 'react-router'
 import Loader from '../../../components/Loader'
+import PrestationForm from '../../../components/admin/PrestationForm'
 
 const EditPrestation = () => {
   const { id } = useParams()
   const navigate = useNavigate()
 
-  // 1. State PLAT : Simple et compatible avec handleChange
   const [formData, setFormData] = useState({
     name: '',
     tarif: '',
     description: '',
-    urlImage: '',
-    altImage: '',
+    url: '',
+    alt: '',
   })
 
+  const [formErrors, setFormErrors] = useState({})
   const [loading, setLoading] = useState(true)
   const [error, setError] = useState(null)
 
@@ -33,16 +34,15 @@ const EditPrestation = () => {
 
         const data = await response.json()
 
-        // 2. On extrait correctement les données depuis le DTO Symfony (data.image)
         setFormData({
           name: data.name || '',
           tarif: data.tarif || '',
           description: data.description || '',
-          urlImage: data.image?.url || '',
-          altImage: data.image?.alt || '',
+          url: data.image?.url || '',
+          alt: data.image?.alt || '',
         })
-      } catch (error) {
-        setError(error.message)
+      } catch (err) {
+        setError(err.message)
       } finally {
         setLoading(false)
       }
@@ -51,14 +51,17 @@ const EditPrestation = () => {
     fetchPrestation()
   }, [id, apiUrl])
 
-  // 3. Le handleChange fonctionne maintenant parfaitement pour TOUS les champs !
-  const handleChange = (e) => {
-    const { name, value } = e.target
-    setFormData((prev) => ({ ...prev, [name]: value }))
-  }
-
   const handleSubmit = async (event) => {
     event.preventDefault()
+    setFormErrors({})
+
+    const payload = {
+      name: formData.name,
+      tarif: formData.tarif !== '' ? Number(formData.tarif) : 0,
+      description: formData.description,
+      urlImage: formData.url,
+      altImage: formData.alt,
+    }
 
     try {
       const response = await fetch(
@@ -67,7 +70,7 @@ const EditPrestation = () => {
           method: 'PUT',
           headers: { 'Content-Type': 'application/json' },
           credentials: 'include',
-          body: JSON.stringify(formData), // Envoie { name, tarif, description, urlImage, altImage }
+          body: JSON.stringify(payload),
         },
       )
 
@@ -75,11 +78,23 @@ const EditPrestation = () => {
         navigate('/admin', {
           state: { successMessage: 'Prestation modifiée avec succès !' },
         })
+      } else if (response.status === 422) {
+        const errorData = await response.json()
+        const formattedError = {}
+
+        if (Array.isArray(errorData.violations)) {
+          errorData.violations.forEach((violation) => {
+            const fieldName = violation.propertyPath || violation.field
+            if (fieldName) formattedError[fieldName] = violation.message
+          })
+        }
+
+        setFormErrors(formattedError)
       } else {
         setError('Erreur lors de la modification')
       }
-    } catch (error) {
-      console.error(error)
+    } catch (err) {
+      console.error(err)
       setError('Erreur réseau')
     }
   }
@@ -93,75 +108,13 @@ const EditPrestation = () => {
         Modifier la prestation #{id}
       </h1>
 
-      <form
-        onSubmit={handleSubmit}
-        className="p-4 bg-white shadow-sm rounded w-50 mx-auto"
-      >
-        <section className="mb-3">
-          <label className="form-label">Nom de la prestation</label>
-          <input
-            type="text"
-            name="name"
-            className="form-control"
-            value={formData.name}
-            onChange={handleChange}
-            required
-          />
-        </section>
-
-        <section className="mb-3">
-          <label className="form-label">Tarif de la prestation (€)</label>
-          <input
-            type="number"
-            name="tarif"
-            className="form-control"
-            value={formData.tarif}
-            onChange={handleChange}
-            required
-          />
-        </section>
-
-        <section className="mb-3">
-          <label className="form-label">Description</label>
-          <textarea
-            className="form-control"
-            value={formData.description}
-            name="description"
-            onChange={handleChange}
-            cols={30}
-            rows={4}
-            required
-          ></textarea>
-        </section>
-
-        <section className="mb-3">
-          <label className="form-label">URL de l'image</label>
-          <input
-            type="text"
-            name="urlImage"
-            className="form-control"
-            value={formData.urlImage}
-            onChange={handleChange}
-            required
-          />
-        </section>
-
-        <section className="mb-3">
-          <label className="form-label">Texte alternatif de l'image</label>
-          <input
-            type="text"
-            name="altImage"
-            className="form-control"
-            value={formData.altImage}
-            onChange={handleChange}
-            required
-          />
-        </section>
-
-        <button type="submit" className="btn btn-primary w-100">
-          Enregistrer les modifications
-        </button>
-      </form>
+      <PrestationForm
+        handleSubmit={handleSubmit}
+        formErrors={formErrors}
+        formData={formData}
+        setFormData={setFormData}
+        labelButton="Modifier"
+      />
     </section>
   )
 }
